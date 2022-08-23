@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Bet extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['stake_amount'];
 }

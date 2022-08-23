@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('bets', function (Blueprint $table) {
             $table->id();
-            $table->integer('stake_amount');
+            $table->decimal('stake_amount',5);
             $table->timestamps();
         });
     }
