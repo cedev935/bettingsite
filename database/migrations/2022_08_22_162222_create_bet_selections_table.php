@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('bet_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('selection_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->decimal('odds',5,3);
+            $table->decimal('odds',9,3);
             $table->timestamps();
         });
     }

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class BalanceTransaction extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['player_id','amount','amount_before'];
 }
