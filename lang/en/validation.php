@@ -150,9 +150,15 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'stake_amount' => [
+            'min' => 'Minimum stake amount is :min',
+            'max' => 'Maximum stake amount is :max',
         ],
+        'selections' => [
+            'min' => 'Minimum number of selections is :min',
+            'max' => 'Minimum number of selections is :max',
+        ]
+
     ],
 
     /*
@@ -166,6 +172,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+//
+    ],
 
 ];

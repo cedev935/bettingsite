@@ -17,8 +17,8 @@ class BetApiController extends Controller
     const MAX_WIN_AMOUNT = 20000;
 
     public function __construct(
-        OddsCalculator      $oddsCalculator,
-        TransactionsManager $transactionsManager
+        OddsCalculator          $oddsCalculator,
+        TransactionsManager     $transactionsManager,
     )
     {
         $this->OddsCalculator = $oddsCalculator;
@@ -28,28 +28,27 @@ class BetApiController extends Controller
     public function placeBet(PlaceBetApiRequest $request)
     {
         $playerBalance = Player::find($request->player_id)->balance;
-
+        // checking player balance
         if (floatval($playerBalance) < floatval($request->stake_amount)) {
             return response()->json(['message' => ' not enough balance to make this bet']);
         }
-
+        //selections validation
         $validator = Validator::make($request->all(), [
             'selections.*.odds' => ['required', 'numeric', 'between:1,10000'],
             'selections.*.id' => 'distinct',
         ], ['selections.*.id.distinct' => 'Duplicate selection found']);
 
-        if ($validator->fails()) {
+        if ($validator->fails()){
             $errors = $validator->errors();
-            return response()->json([
-                'selection' => $errors
-            ]);
+            return response()->json(['errors'=> $errors]);
         }
 
+        //count maximum winning amount
         $maxWinAmount = $this->OddsCalculator->count($request);
 
         if ($maxWinAmount > self::MAX_WIN_AMOUNT) {
             return response()->json([
-                'message' => 'Maximum win amount is to large',
+                'errors' => 'Maximum win amount is to large',
                 'maximum_amount' => self::MAX_WIN_AMOUNT]);
         }
 
@@ -64,7 +63,7 @@ class BetApiController extends Controller
                 "odds" => $selection['odds'],
             ]);
         }
-
+        // deducted from player balance
         $this->TransactionsManager->make($request);
 
         return response()->json(['message' => 'Your bet is placed'], 201);
