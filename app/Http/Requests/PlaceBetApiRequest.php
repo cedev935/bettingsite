@@ -41,12 +41,6 @@ class PlaceBetApiRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $response = new Response(['errors' => $validator->errors()], 422);
-        throw new ValidationException($validator, $response);
-    }
-
     public function messages()
     {
         return [
@@ -54,4 +48,15 @@ class PlaceBetApiRequest extends FormRequest
             'selections.*.odds.max' => 'Maximum number of odd is :max'
         ];
     }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = new Response([
+                'errors' => $validator->errors()]
+            , 422);
+
+        throw new ValidationException($validator, $response);
+    }
+
+
 }

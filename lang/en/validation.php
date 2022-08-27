@@ -157,8 +157,8 @@ return [
         'selections' => [
             'min' => 'Minimum number of selections is :min',
             'max' => 'Minimum number of selections is :max',
-        ]
-
+        ],
+        'selections.*.odds' => ['required' => 'odds is required']
     ],
 
     /*
